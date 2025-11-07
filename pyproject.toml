@@ -1,6 +1,6 @@
 [project]
 name = "simulateur-trafic-oussama"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simulateur de trafic routier (Vehicule, Route, ReseauRoutier, Simulateur)"
 authors = [
     { name = "Ahmed", email = "achebbi2002@gmail.com" }
@@ -10,7 +10,6 @@ requires-python = ">=3.8"
 license = "MIT"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
