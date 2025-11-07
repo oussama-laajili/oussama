@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>core.simulateur &#8212; Traffic 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for core.simulateur</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">models.reseau</span> <span class="kn">import</span> <span class="n">ReseauRoutier</span>
+
+
+<div class="viewcode-block" id="Simulateur">
+<a class="viewcode-back" href="../../index.html#core.simulateur.Simulateur">[docs]</a>
+<span class="k">class</span> <span class="nc">Simulateur</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialise le simulateur avec la configuration du réseau.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span> <span class="o">=</span> <span class="n">ReseauRoutier</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">charger_config</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temps_ecoule</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+<div class="viewcode-block" id="Simulateur.lancer_simulation">
+<a class="viewcode-back" href="../../index.html#core.simulateur.Simulateur.lancer_simulation">[docs]</a>
+    <span class="k">def</span> <span class="nf">lancer_simulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_tours</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lance la simulation du trafic.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== DÉBUT DE LA SIMULATION ===&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nombre de tours: </span><span class="si">{</span><span class="n">n_tours</span><span class="si">}</span><span class="s2">, Intervalle de temps: </span><span class="si">{</span><span class="n">delta_t</span><span class="si">}</span><span class="s2">s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">tour</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tours</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Tour </span><span class="si">{</span><span class="n">tour</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> (t=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temps_ecoule</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s) ---&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mettre_a_jour</span><span class="p">(</span><span class="n">delta_t</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">afficher_etat</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temps_ecoule</span> <span class="o">+=</span> <span class="n">delta_t</span>
+            <span class="nb">print</span><span class="p">()</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== FIN DE LA SIMULATION ===&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Simulateur.mettre_a_jour">
+<a class="viewcode-back" href="../../index.html#core.simulateur.Simulateur.mettre_a_jour">[docs]</a>
+    <span class="k">def</span> <span class="nf">mettre_a_jour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Met à jour l&#39;état de tous les véhicules.&quot;&quot;&quot;</span>
+        <span class="n">vehicules_a_retirer</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">vehicule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">vehicules</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">vehicule</span><span class="o">.</span><span class="n">a_termine_itineraire</span><span class="p">():</span>
+                <span class="n">vehicules_a_retirer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="p">)</span>
+                <span class="k">continue</span>
+            
+            <span class="n">route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">routes</span><span class="p">[</span><span class="n">vehicule</span><span class="o">.</span><span class="n">route_actuelle</span><span class="p">]</span>
+            
+            <span class="c1"># Avancer le véhicule</span>
+            <span class="n">nouvelle_position</span> <span class="o">=</span> <span class="n">vehicule</span><span class="o">.</span><span class="n">avancer</span><span class="p">(</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span>
+            
+            <span class="c1"># Vérifier si le véhicule a atteint la fin de la route</span>
+            <span class="k">if</span> <span class="n">nouvelle_position</span> <span class="o">&gt;=</span> <span class="n">route</span><span class="o">.</span><span class="n">longueur</span><span class="p">:</span>
+                <span class="n">route_suivante</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">obtenir_route_suivante</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">route_suivante</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  → </span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="si">}</span><span class="s2"> passe de </span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">route_actuelle</span><span class="si">}</span><span class="s2"> à </span><span class="si">{</span><span class="n">route_suivante</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="c1"># Retirer de l&#39;ancienne route</span>
+                    <span class="n">route</span><span class="o">.</span><span class="n">retirer_vehicule</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span>
+                    <span class="c1"># Changer de route</span>
+                    <span class="n">vehicule</span><span class="o">.</span><span class="n">changer_de_route</span><span class="p">(</span><span class="n">route_suivante</span><span class="p">)</span>
+                    <span class="c1"># Ajouter à la nouvelle route</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">routes</span><span class="p">[</span><span class="n">route_suivante</span><span class="p">]</span><span class="o">.</span><span class="n">ajouter_vehicule</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  → </span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="si">}</span><span class="s2"> a terminé son itinéraire&quot;</span><span class="p">)</span>
+                    <span class="n">route</span><span class="o">.</span><span class="n">retirer_vehicule</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span>
+                    <span class="n">vehicules_a_retirer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="p">)</span>
+        
+        <span class="c1"># Retirer les véhicules qui ont terminé</span>
+        <span class="k">for</span> <span class="n">vid</span> <span class="ow">in</span> <span class="n">vehicules_a_retirer</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">vehicules</span><span class="p">[</span><span class="n">vid</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="Simulateur.afficher_etat">
+<a class="viewcode-back" href="../../index.html#core.simulateur.Simulateur.afficher_etat">[docs]</a>
+    <span class="k">def</span> <span class="nf">afficher_etat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Affiche l&#39;état actuel de la simulation.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">État des routes:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nom_route</span><span class="p">,</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">nom_route</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">route</span><span class="o">.</span><span class="n">vehicules_presents</span><span class="p">)</span><span class="si">}</span><span class="s2"> véhicule(s) - </span><span class="si">{</span><span class="n">route</span><span class="o">.</span><span class="n">vehicules_presents</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">État des véhicules:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">vehicule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">vehicules</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">prochaine_route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reseau</span><span class="o">.</span><span class="n">obtenir_route_suivante</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="si">}</span><span class="s2">: position=</span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">position</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m sur </span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">route_actuelle</span><span class="si">}</span><span class="s2">, &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;vitesse=</span><span class="si">{</span><span class="n">vehicule</span><span class="o">.</span><span class="n">vitesse</span><span class="si">}</span><span class="s2">m/s, prochaine=</span><span class="si">{</span><span class="n">prochaine_route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Traffic</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2025, Ahmed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

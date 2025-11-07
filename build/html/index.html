@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Traffic Documentation &#8212; Traffic 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=cb25574f" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="traffic-documentation">
+<h1>Traffic Documentation<a class="headerlink" href="#traffic-documentation" title="Link to this heading">¶</a></h1>
+<p>A toolkit for simulating, analyzing, and modeling traffic networks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This documentation includes guides and full API reference
+for all modules under <code class="docutils literal notranslate"><span class="pre">core</span></code> and <code class="docutils literal notranslate"><span class="pre">models</span></code>.</p>
+</div>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+<section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h1>
+<section id="module-core.analyseur">
+<span id="core"></span><h2>Core<a class="headerlink" href="#module-core.analyseur" title="Link to this heading">¶</a></h2>
+<dl class="py class" id="module-core.simulateur">
+<dt class="sig sig-object py" id="core.simulateur.Simulateur">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.simulateur.</span></span><span class="sig-name descname"><span class="pre">Simulateur</span></span><a class="reference internal" href="_modules/core/simulateur.html#Simulateur"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.simulateur.Simulateur" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="core.simulateur.Simulateur.afficher_etat">
+<span class="sig-name descname"><span class="pre">afficher_etat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/simulateur.html#Simulateur.afficher_etat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.simulateur.Simulateur.afficher_etat" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche l’état actuel de la simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.simulateur.Simulateur.lancer_simulation">
+<span class="sig-name descname"><span class="pre">lancer_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_tours</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/simulateur.html#Simulateur.lancer_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.simulateur.Simulateur.lancer_simulation" title="Link to this definition">¶</a></dt>
+<dd><p>Lance la simulation du trafic.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.simulateur.Simulateur.mettre_a_jour">
+<span class="sig-name descname"><span class="pre">mettre_a_jour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/simulateur.html#Simulateur.mettre_a_jour"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.simulateur.Simulateur.mettre_a_jour" title="Link to this definition">¶</a></dt>
+<dd><p>Met à jour l’état de tous les véhicules.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-models.reseau">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-models.reseau" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.reseau.</span></span><span class="sig-name descname"><span class="pre">ReseauRoutier</span></span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier.ajouter_intersection">
+<span class="sig-name descname"><span class="pre">ajouter_intersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intersection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier.ajouter_intersection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier.ajouter_intersection" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute une intersection au réseau.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier.ajouter_route">
+<span class="sig-name descname"><span class="pre">ajouter_route</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">route</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier.ajouter_route"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier.ajouter_route" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute une route au réseau.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier.ajouter_vehicule">
+<span class="sig-name descname"><span class="pre">ajouter_vehicule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier.ajouter_vehicule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier.ajouter_vehicule" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute un véhicule au réseau.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier.charger_config">
+<span class="sig-name descname"><span class="pre">charger_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier.charger_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier.charger_config" title="Link to this definition">¶</a></dt>
+<dd><p>Charge la configuration depuis un fichier JSON.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.reseau.ReseauRoutier.obtenir_route_suivante">
+<span class="sig-name descname"><span class="pre">obtenir_route_suivante</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/reseau.html#ReseauRoutier.obtenir_route_suivante"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.reseau.ReseauRoutier.obtenir_route_suivante" title="Link to this definition">¶</a></dt>
+<dd><p>Retourne la prochaine route dans l’itinéraire du véhicule.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-models.route">
+<dt class="sig sig-object py" id="models.route.Route">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.route.</span></span><span class="sig-name descname"><span class="pre">Route</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limite_de_vitesse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vehicules_presents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/route.html#Route"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.route.Route" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.route.Route.ajouter_vehicule">
+<span class="sig-name descname"><span class="pre">ajouter_vehicule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/route.html#Route.ajouter_vehicule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.route.Route.ajouter_vehicule" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute un véhicule sur cette route.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.route.Route.retirer_vehicule">
+<span class="sig-name descname"><span class="pre">retirer_vehicule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/route.html#Route.retirer_vehicule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.route.Route.retirer_vehicule" title="Link to this definition">¶</a></dt>
+<dd><p>Retire un véhicule de cette route.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-models.vehicule">
+<dt class="sig sig-object py" id="models.vehicule.Vehicule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.vehicule.</span></span><span class="sig-name descname"><span class="pre">Vehicule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_initiale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vitesse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">itineraire</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/vehicule.html#Vehicule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.vehicule.Vehicule" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="models.vehicule.Vehicule.a_termine_itineraire">
+<span class="sig-name descname"><span class="pre">a_termine_itineraire</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/vehicule.html#Vehicule.a_termine_itineraire"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.vehicule.Vehicule.a_termine_itineraire" title="Link to this definition">¶</a></dt>
+<dd><p>Vérifie si le véhicule a terminé son itinéraire.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.vehicule.Vehicule.avancer">
+<span class="sig-name descname"><span class="pre">avancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta_t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/vehicule.html#Vehicule.avancer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.vehicule.Vehicule.avancer" title="Link to this definition">¶</a></dt>
+<dd><p>Avance le véhicule pendant delta_t secondes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.vehicule.Vehicule.changer_de_route">
+<span class="sig-name descname"><span class="pre">changer_de_route</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nouvelle_route</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/vehicule.html#Vehicule.changer_de_route"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.vehicule.Vehicule.changer_de_route" title="Link to this definition">¶</a></dt>
+<dd><p>Change le véhicule de route.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Traffic</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2025, Ahmed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

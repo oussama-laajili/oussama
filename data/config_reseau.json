@@ -1,0 +1,20 @@
+{
+  "routes": [
+            {"nom": "R1", "longueur": 1000.0, "limite_de_vitesse": 13.9, "vehicules_presents": []},
+            {"nom": "R2", "longueur": 800.0, "limite_de_vitesse": 11.1, "vehicules_presents": []},
+            {"nom": "R3", "longueur": 1200.0, "limite_de_vitesse": 16.7, "vehicules_presents": []}
+  ],
+  "intersections": [
+    {"nom": "I1", "connecte": ["R1", "R2"]},
+    {"nom": "I2", "connecte": ["R2", "R3"]}
+  ],
+  "vehicules": [
+    {"id": "V1", "route_initiale": "R1", "position": 0.0, "vitesse": 10.0, "itineraire": ["R1","R2","R3"]},
+    {"id": "V2", "route_initiale": "R2", "position": 50.0, "vitesse": 8.0,  "itineraire": ["R2","R3"]},
+    {"id": "V3", "route_initiale": "R3", "position": 20.0, "vitesse": 12.0,  "itineraire": ["R3","R2"]},
+    {"id": "V4", "route_initiale": "R1", "position": 10.0, "vitesse": 6.0,  "itineraire": ["R1","R2","R3"]},
+    {"id": "V5", "route_initiale": "R2", "position": 30.0, "vitesse": 4.0,  "itineraire": ["R2","R3"]},
+    {"id": "V6", "route_initiale": "R3", "position": 80.0, "vitesse": 2.0,  "itineraire": ["R3","R2","R1"]},
+    {"id": "V7", "route_initiale": "R2", "position": 60.0, "vitesse": 9.0,  "itineraire": ["R2","R3","R2","R1"]}
+  ]
+}

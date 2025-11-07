@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>models.reseau &#8212; Traffic 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=cb25574f" />
+    <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for models.reseau</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">models.route</span> <span class="kn">import</span> <span class="n">Route</span>
+<span class="kn">from</span> <span class="nn">models.vehicule</span> <span class="kn">import</span> <span class="n">Vehicule</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<div class="viewcode-block" id="ReseauRoutier">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier">[docs]</a>
+<span class="k">class</span> <span class="nc">ReseauRoutier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">routes</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Dict: nom -&gt; Route</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intersections</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Dict: nom -&gt; liste de routes connectées</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vehicules</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Dict: id -&gt; Vehicule</span>
+    
+<div class="viewcode-block" id="ReseauRoutier.ajouter_route">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier.ajouter_route">[docs]</a>
+    <span class="k">def</span> <span class="nf">ajouter_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ajoute une route au réseau.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">routes</span><span class="p">[</span><span class="n">route</span><span class="o">.</span><span class="n">nom</span><span class="p">]</span> <span class="o">=</span> <span class="n">route</span></div>
+
+    
+<div class="viewcode-block" id="ReseauRoutier.ajouter_intersection">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier.ajouter_intersection">[docs]</a>
+    <span class="k">def</span> <span class="nf">ajouter_intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intersection</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ajoute une intersection au réseau.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intersections</span><span class="p">[</span><span class="n">intersection</span><span class="p">[</span><span class="s1">&#39;nom&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">intersection</span><span class="p">[</span><span class="s1">&#39;connecte&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="ReseauRoutier.ajouter_vehicule">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier.ajouter_vehicule">[docs]</a>
+    <span class="k">def</span> <span class="nf">ajouter_vehicule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicule</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ajoute un véhicule au réseau.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vehicules</span><span class="p">[</span><span class="n">vehicule</span><span class="o">.</span><span class="n">identifiant</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicule</span>
+        <span class="c1"># Ajoute le véhicule à sa route initiale</span>
+        <span class="k">if</span> <span class="n">vehicule</span><span class="o">.</span><span class="n">route_actuelle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">routes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">routes</span><span class="p">[</span><span class="n">vehicule</span><span class="o">.</span><span class="n">route_actuelle</span><span class="p">]</span><span class="o">.</span><span class="n">ajouter_vehicule</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ReseauRoutier.charger_config">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier.charger_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">charger_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Charge la configuration depuis un fichier JSON.&quot;&quot;&quot;</span>
+        <span class="c1"># Ouvrir et lire le fichier JSON</span>
+        <span class="n">fichier_json</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">fichier_json</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Obtenir le dossier du fichier actuel (models/)</span>
+            <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="c1"># Remonter au dossier parent (Traffic/) puis aller dans data/</span>
+            <span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span>
+            <span class="n">fichier_json</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;config_reseau.json&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">fichier_json</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">fichier_json</span><span class="p">)</span>
+    
+        <span class="c1"># Vérifier si le fichier existe</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fichier_json</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le fichier </span><span class="si">{</span><span class="n">fichier_json</span><span class="si">}</span><span class="s2"> n&#39;existe pas&quot;</span><span class="p">)</span>
+    
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chargement du fichier: </span><span class="si">{</span><span class="n">fichier_json</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fichier_json</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        
+        <span class="c1"># Charger les routes</span>
+        <span class="k">for</span> <span class="n">route_data</span> <span class="ow">in</span> <span class="n">config_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;routes&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="n">Route</span><span class="p">(</span><span class="o">**</span><span class="n">route_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ajouter_route</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+        
+        <span class="c1"># Charger les intersections</span>
+        <span class="k">for</span> <span class="n">intersection</span> <span class="ow">in</span> <span class="n">config_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;intersections&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ajouter_intersection</span><span class="p">(</span><span class="n">intersection</span><span class="p">)</span>
+        
+        <span class="c1"># Charger les véhicules</span>
+        <span class="k">for</span> <span class="n">vehicule_data</span> <span class="ow">in</span> <span class="n">config_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vehicules&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">vehicule</span> <span class="o">=</span> <span class="n">Vehicule</span><span class="p">(</span><span class="o">**</span><span class="n">vehicule_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ajouter_vehicule</span><span class="p">(</span><span class="n">vehicule</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="ReseauRoutier.obtenir_route_suivante">
+<a class="viewcode-back" href="../../index.html#models.reseau.ReseauRoutier.obtenir_route_suivante">[docs]</a>
+    <span class="k">def</span> <span class="nf">obtenir_route_suivante</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicule</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne la prochaine route dans l&#39;itinéraire du véhicule.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">vehicule</span><span class="o">.</span><span class="n">index_itineraire</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vehicule</span><span class="o">.</span><span class="n">itineraire</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">vehicule</span><span class="o">.</span><span class="n">itineraire</span><span class="p">[</span><span class="n">vehicule</span><span class="o">.</span><span class="n">index_itineraire</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Traffic</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2025, Ahmed.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
