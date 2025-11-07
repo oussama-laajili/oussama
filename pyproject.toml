@@ -1,6 +1,6 @@
 [project]
 name = "simulateur-trafic-oussama"
-version = "0.1.1"
+version = "0.1.2"
 description = "Simulateur de trafic routier (Vehicule, Route, ReseauRoutier, Simulateur)"
 authors = [
     { name = "Ahmed", email = "achebbi2002@gmail.com" }
